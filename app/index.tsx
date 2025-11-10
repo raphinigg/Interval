@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+
 
 export default function TimerSetup() {
   const [workSeconds, setWorkSeconds] = useState("");
@@ -7,57 +8,78 @@ export default function TimerSetup() {
   const [rounds, setRounds] = useState("");
 
   return (
-    <SafeAreaView style={styles.safe}>
-      <View style={styles.wrap}>
-        <Text style={styles.title}>Timer konfigurieren</Text>
+    <ImageBackground
+      source={require("../assets/images/Spaceportsmall.gif")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.wrap}>
+          <Text style={styles.title}>Timer konfigurieren</Text>
 
-        <View style={styles.field}>
-          <Text style={styles.label}>Sekunden Arbeit</Text>
-          <TextInput
-            value={workSeconds}
-            onChangeText={setWorkSeconds}
-            placeholder="z. B. 25"
-            keyboardType="number-pad"
-            style={styles.input}
-          />
+          <View style={styles.field}>
+            <Text style={styles.label}>Sekunden Arbeit</Text>
+            <TextInput
+              value={workSeconds}
+              onChangeText={setWorkSeconds}
+              placeholder="z. B. 25"
+              keyboardType="number-pad"
+              style={styles.input}
+            />
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Sekunden Pause</Text>
+            <TextInput
+              value={breakSeconds}
+              onChangeText={setBreakSeconds}
+              placeholder="z. B. 5"
+              keyboardType="number-pad"
+              style={styles.input}
+            />
+          </View>
+
+          <View style={styles.field}>
+            <Text style={styles.label}>Anzahl Runden</Text>
+            <TextInput
+              value={rounds}
+              onChangeText={setRounds}
+              placeholder="z. B. 8"
+              keyboardType="number-pad"
+              style={styles.input}
+            />
+          </View>
+
+          <Pressable style={styles.button} onPress={() => {}}>
+            <Text style={styles.buttonText}>Weiter</Text>
+          </Pressable>
         </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>Sekunden Pause</Text>
-          <TextInput
-            value={breakSeconds}
-            onChangeText={setBreakSeconds}
-            placeholder="z. B. 5"
-            keyboardType="number-pad"
-            style={styles.input}
-          />
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>Anzahl Runden</Text>
-          <TextInput
-            value={rounds}
-            onChangeText={setRounds}
-            placeholder="z. B. 8"
-            keyboardType="number-pad"
-            style={styles.input}
-          />
-        </View>
-
-        <Pressable style={styles.button} onPress={() => { /* Schritt 2: wird später verdrahtet */ }}>
-          <Text style={styles.buttonText}>Weiter</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#f3f4f6", padding: 16 },
-  wrap: { flex: 1, maxWidth: 420, width: "100%", alignSelf: "center", justifyContent: "center" },
-  title: { fontSize: 22, fontWeight: "600", marginBottom: 16 },
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  safe: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)", // leichter Overlay-Effekt
+    padding: 16,
+  },
+  wrap: {
+    flex: 1,
+    maxWidth: 420,
+    width: "100%",
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  title: { fontSize: 22, fontWeight: "600", color: "#fff", marginBottom: 16, textAlign: "center" },
   field: { marginBottom: 12 },
-  label: { fontSize: 14, marginBottom: 6 },
+  label: { fontSize: 14, marginBottom: 6, color: "#fff" },
   input: {
     borderWidth: 1,
     borderColor: "#d1d5db",
@@ -65,7 +87,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255,255,255,0.8)",
+    color: "#000",
   },
   button: {
     marginTop: 16,
