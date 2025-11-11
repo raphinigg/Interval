@@ -1,7 +1,16 @@
+import { router } from "expo-router";
 import React, { useState } from "react";
-import { ImageBackground, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  ImageBackground,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
-
+// GIF-Hintergrund + Eingabefelder + Weiter-Button
 export default function TimerSetup() {
   const [workSeconds, setWorkSeconds] = useState("");
   const [breakSeconds, setBreakSeconds] = useState("");
@@ -50,7 +59,14 @@ export default function TimerSetup() {
             />
           </View>
 
-          <Pressable style={styles.button} onPress={() => {}}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              router.push(
+                `/timer-run?work=${workSeconds || 25}&pause=${breakSeconds || 5}&rounds=${rounds || 8}`
+              );
+            }}
+          >
             <Text style={styles.buttonText}>Weiter</Text>
           </Pressable>
         </View>
@@ -67,7 +83,7 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)", // leichter Overlay-Effekt
+    backgroundColor: "rgba(0,0,0,0.4)", // Overlay-Effekt
     padding: 16,
   },
   wrap: {
@@ -77,7 +93,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
   },
-  title: { fontSize: 22, fontWeight: "600", color: "#fff", marginBottom: 16, textAlign: "center" },
+  title: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: "#fff",
+    marginBottom: 16,
+    textAlign: "center",
+  },
   field: { marginBottom: 12 },
   label: { fontSize: 14, marginBottom: 6, color: "#fff" },
   input: {
