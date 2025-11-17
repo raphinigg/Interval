@@ -1,25 +1,31 @@
-import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import {
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
 
 export default function TimerRun() {
   const params = useLocalSearchParams<{ work?: string; pause?: string; rounds?: string }>();
 
-  const workSec = useMemo(() => parseInt(params.work ?? "25", 10) || 0, [params.work]);
-  const pauseSec = useMemo(() => parseInt(params.pause ?? "5", 10) || 0, [params.pause]);
-  const roundsTotal = useMemo(() => parseInt(params.rounds ?? "8", 10) || 1, [params.rounds]);
+  const workSec = useMemo(() => parseInt(params.work ?? "60", 10) || 0, [params.work]);
+  const pauseSec = useMemo(() => parseInt(params.pause ?? "10", 10) || 0, [params.pause]);
+  const roundsTotal = useMemo(() => parseInt(params.rounds ?? "5", 10) || 1, [params.rounds]);
 
   const [phase, setPhase] = useState<"work" | "pause">("work");
   const [round, setRound] = useState(1);
   const [secondsLeft, setSecondsLeft] = useState(workSec);
   const [running, setRunning] = useState(true);
 
-  // Countdown Logik
   useEffect(() => {
     if (!running) return;
     const id = setInterval(() => {
       setSecondsLeft((s) => {
         if (s > 0) return s - 1;
+
         if (phase === "work") {
           setPhase("pause");
           return pauseSec;
@@ -38,7 +44,6 @@ export default function TimerRun() {
   }, [running, phase, round, roundsTotal, workSec, pauseSec]);
 
   const togglePause = () => setRunning((v) => !v);
-
   const skip = () => {
     if (phase === "work") {
       setPhase("pause");
@@ -53,35 +58,76 @@ export default function TimerRun() {
       }
     }
   };
+  const end = () => router.back();
 
-  const end = () => {
-    router.back();
-  };
-
-  const mmss = (total: number) => {
-    const m = Math.floor(total / 60);
-    const s = total % 60;
-    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-  };
+  const secondsDisplay = secondsLeft.toString();
 
   return (
-    <View>
-      <Text>{mmss(secondsLeft)}</Text>
-      <Text>
-        Runde {round} / {roundsTotal} ({phase === "work" ? "Arbeit" : "Pause"})
-      </Text>
+    <ImageBackground
+      source={require("../assets/images/background.gif")}
+      style={styles.bg}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
 
-      <Pressable onPress={togglePause}>
-        <Text>{running ? "Pause" : "Weiter"}</Text>
-      </Pressable>
+        {/* OBERER BEREICH */}
+        <View style={styles.top}>
+          <View style={styles.timeRow}>
+            <Text style={styles.timeValue}>{secondsDisplay}</Text>
+            <View style={styles.timeLabelCol}>
+              <Text style={styles.timeLabel}>Sekunden</Text>
+              <Text style={styles.timeLabel}>{phase === "work" ? "Arbeit" : "Pause"}</Text>
+            </View>
+          </View>
+        </View>
 
-      <Pressable onPress={skip}>
-        <Text>Skip</Text>
-      </Pressable>
+        {/* UNTERE BUTTONS */}
+        <View style={styles.bottom}>
+          <Pressable style={styles.button} onPress={togglePause}>
+            <Text style={styles.buttonText}>{running ? "Pause" : "Weiter"}</Text>
+          </Pressable>
 
-      <Pressable onPress={end}>
-        <Text>End</Text>
-      </Pressable>
-    </View>
+          <Pressable style={styles.button} onPress={skip}>
+            <Text style={styles.buttonText}>Skip</Text>
+          </Pressable>
+
+          <Pressable style={styles.button} onPress={end}>
+            <Text style={styles.buttonText}>End</Text>
+          </Pressable>
+        </View>
+
+      </View>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  bg: { flex: 1 },
+  overlay: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: 72,
+    paddingBottom: 32,
+    justifyContent: "space-between",
+  },
+  top: { alignItems: "center" },
+  timeRow: { flexDirection: "row", alignItems: "center" },
+  timeValue: { fontSize: 48, fontWeight: "600", color: "white" },
+  timeLabelCol: { marginLeft: 8 },
+  timeLabel: { color: "white", fontSize: 14 },
+  bottom: { alignItems: "center", gap: 12 },
+  button: {
+    width: 220,
+    paddingVertical: 12,
+    borderRadius: 999,
+    backgroundColor: "rgba(255,255,255,0.25)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.5)",
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
+    fontWeight: "600",
+    fontSize: 16,
+  },
+});
