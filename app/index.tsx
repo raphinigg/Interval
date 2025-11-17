@@ -1,16 +1,14 @@
-import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   ImageBackground,
   Pressable,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
+import { router } from "expo-router";
 
-// GIF-Hintergrund + Eingabefelder + Weiter-Button
 export default function TimerSetup() {
   const [workSeconds, setWorkSeconds] = useState("");
   const [breakSeconds, setBreakSeconds] = useState("");
@@ -19,105 +17,166 @@ export default function TimerSetup() {
   return (
     <ImageBackground
       source={require("../assets/images/Spaceportsmall.gif")}
-      style={styles.background}
+      style={styles.bg}
       resizeMode="cover"
     >
-      <SafeAreaView style={styles.safe}>
-        <View style={styles.wrap}>
-          <Text style={styles.title}>Timer konfigurieren</Text>
+      <View style={styles.overlay}>
+        <View style={styles.leftCol}>
+          {/* Headline ohne Name */}
+          <Text style={styles.headlineTop}>Dein nächster</Text>
+          <Text style={styles.headlineBottom}>Intervall</Text>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Sekunden Arbeit</Text>
-            <TextInput
-              value={workSeconds}
-              onChangeText={setWorkSeconds}
-              placeholder="z. B. 25"
-              keyboardType="number-pad"
-              style={styles.input}
-            />
+          {/* Sekunden Arbeit */}
+          <View style={styles.row}>
+            <View style={styles.circle}>
+              <TextInput
+                value={workSeconds}
+                onChangeText={setWorkSeconds}
+                placeholder="60"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                keyboardType="number-pad"
+                style={styles.circleInput}
+              />
+            </View>
+            <View style={styles.labelWrap}>
+              <Text style={styles.label}>Sekunden</Text>
+              <Text style={styles.label}>Arbeit</Text>
+            </View>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Sekunden Pause</Text>
-            <TextInput
-              value={breakSeconds}
-              onChangeText={setBreakSeconds}
-              placeholder="z. B. 5"
-              keyboardType="number-pad"
-              style={styles.input}
-            />
+          {/* Sekunden Pause */}
+          <View style={styles.row}>
+            <View style={styles.circle}>
+              <TextInput
+                value={breakSeconds}
+                onChangeText={setBreakSeconds}
+                placeholder="10"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                keyboardType="number-pad"
+                style={styles.circleInput}
+              />
+            </View>
+            <View style={styles.labelWrap}>
+              <Text style={styles.label}>Sekunden</Text>
+              <Text style={styles.label}>Pause</Text>
+            </View>
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.label}>Anzahl Runden</Text>
-            <TextInput
-              value={rounds}
-              onChangeText={setRounds}
-              placeholder="z. B. 8"
-              keyboardType="number-pad"
-              style={styles.input}
-            />
+          {/* Anzahl Runden */}
+          <View style={styles.row}>
+            <View style={styles.circle}>
+              <TextInput
+                value={rounds}
+                onChangeText={setRounds}
+                placeholder="5"
+                placeholderTextColor="rgba(255,255,255,0.6)"
+                keyboardType="number-pad"
+                style={styles.circleInput}
+              />
+            </View>
+            <View style={styles.labelWrap}>
+              <Text style={styles.label}>Anzahl</Text>
+              <Text style={styles.label}>Runden</Text>
+            </View>
           </View>
 
+          {/* Glass-UI Start-Button */}
           <Pressable
-            style={styles.button}
+            style={styles.startBtn}
             onPress={() => {
               router.push(
-                `/timer-run?work=${workSeconds || 25}&pause=${breakSeconds || 5}&rounds=${rounds || 8}`
+                `/timer-run?work=${workSeconds || 60}&pause=${breakSeconds || 10}&rounds=${rounds || 5}`
               );
             }}
           >
-            <Text style={styles.buttonText}>Weiter</Text>
+            <Text style={styles.startTxt}>Starten</Text>
           </Pressable>
         </View>
-      </SafeAreaView>
+      </View>
     </ImageBackground>
   );
 }
 
+const CIRCLE_SIZE = 72;
+
 const styles = StyleSheet.create({
-  background: {
+  bg: { flex: 1, width: "100%", height: "100%" },
+
+ 
+  overlay: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.25)",
+    paddingHorizontal: 32,
+    paddingTop: 96,
+    paddingBottom: 32,
   },
-  safe: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)", // Overlay-Effekt
-    padding: 16,
+  leftCol: {
+    width: "70%",
+    maxWidth: 360,
+    gap: 24,
   },
-  wrap: {
-    flex: 1,
-    maxWidth: 420,
-    width: "100%",
-    alignSelf: "center",
-    justifyContent: "center",
+
+  headlineTop: {
+    color: "rgba(255,255,255,0.9)",
+    fontSize: 28,
+    fontWeight: "400",
   },
-  title: {
-    fontSize: 22,
-    fontWeight: "600",
-    color: "#fff",
-    marginBottom: 16,
-    textAlign: "center",
+  headlineBottom: {
+    color: "rgba(255,255,255,1)",
+    fontSize: 32,
+    fontWeight: "700",
+    marginTop: -4,
+    marginBottom: 12,
   },
-  field: { marginBottom: 12 },
-  label: { fontSize: 14, marginBottom: 6, color: "#fff" },
-  input: {
-    borderWidth: 1,
-    borderColor: "#d1d5db",
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    backgroundColor: "rgba(255,255,255,0.8)",
-    color: "#000",
-  },
-  button: {
-    marginTop: 16,
-    backgroundColor: "#000",
-    borderRadius: 10,
-    paddingVertical: 12,
+
+  row: {
+    flexDirection: "row",
     alignItems: "center",
+    gap: 16,
   },
-  buttonText: { color: "#fff", fontWeight: "600", fontSize: 16 },
+  circle: {
+    width: CIRCLE_SIZE,
+    height: CIRCLE_SIZE,
+    borderRadius: CIRCLE_SIZE / 2,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255,255,255,0.08)",
+  },
+  circleInput: {
+    color: "#fff",
+    fontSize: 22,
+    textAlign: "center",
+    width: "100%",
+  },
+  labelWrap: {
+    gap: 2,
+  },
+  label: {
+    color: "rgba(255,255,255,0.85)",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+
+  // Versuch Glass Ui nachzustellen V1. --> Gibt es vielleicht ein Plugin?
+  startBtn: {
+    marginTop: 12,
+    alignSelf: "flex-start",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 999,
+    backgroundColor: "rgba(255,255,255,0.22)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.7)",
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  startTxt: {
+    color: "#ffffff",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });
