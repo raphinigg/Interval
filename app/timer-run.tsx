@@ -1,3 +1,4 @@
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   ImageBackground,
@@ -6,7 +7,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
 
 export default function TimerRun() {
   const params = useLocalSearchParams<{ work?: string; pause?: string; rounds?: string }>();
@@ -22,6 +22,7 @@ export default function TimerRun() {
 
   useEffect(() => {
     if (!running) return;
+
     const id = setInterval(() => {
       setSecondsLeft((s) => {
         if (s > 0) return s - 1;
@@ -40,6 +41,7 @@ export default function TimerRun() {
         }
       });
     }, 1000);
+
     return () => clearInterval(id);
   }, [running, phase, round, roundsTotal, workSec, pauseSec]);
 
@@ -62,6 +64,9 @@ export default function TimerRun() {
 
   const secondsDisplay = secondsLeft.toString();
 
+  // DOTS LOGIK
+  const dots = Array.from({ length: roundsTotal }, (_, i) => i + 1);
+
   return (
     <ImageBackground
       source={require("../assets/images/background.gif")}
@@ -76,12 +81,27 @@ export default function TimerRun() {
             <Text style={styles.timeValue}>{secondsDisplay}</Text>
             <View style={styles.timeLabelCol}>
               <Text style={styles.timeLabel}>Sekunden</Text>
-              <Text style={styles.timeLabel}>{phase === "work" ? "Arbeit" : "Pause"}</Text>
+              <Text style={styles.timeLabel}>
+                {phase === "work" ? "Arbeit" : "Pause"}
+              </Text>
             </View>
+          </View>
+
+          {/* RUNDEN-KREISE */}
+          <View style={styles.dotsRow}>
+            {dots.map((n) => {
+              const active = n === round;
+              return (
+                <View
+                  key={n}
+                  style={[styles.dot, active && styles.dotActive]}
+                />
+              );
+            })}
           </View>
         </View>
 
-        {/* UNTERE BUTTONS */}
+        {/* BUTTONS */}
         <View style={styles.bottom}>
           <Pressable style={styles.button} onPress={togglePause}>
             <Text style={styles.buttonText}>{running ? "Pause" : "Weiter"}</Text>
@@ -95,7 +115,6 @@ export default function TimerRun() {
             <Text style={styles.buttonText}>End</Text>
           </Pressable>
         </View>
-
       </View>
     </ImageBackground>
   );
@@ -115,6 +134,26 @@ const styles = StyleSheet.create({
   timeValue: { fontSize: 48, fontWeight: "600", color: "white" },
   timeLabelCol: { marginLeft: 8 },
   timeLabel: { color: "white", fontSize: 14 },
+
+  // DOTS
+  dotsRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 8,
+    marginTop: 16,
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.5)",
+  },
+  dotActive: {
+    backgroundColor: "white",
+    borderColor: "white",
+  },
+
   bottom: { alignItems: "center", gap: 12 },
   button: {
     width: 220,
