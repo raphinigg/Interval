@@ -20,6 +20,7 @@ export default function TimerRun() {
   const [secondsLeft, setSecondsLeft] = useState(workSec);
   const [running, setRunning] = useState(true);
 
+  // Countdown-Logik
   useEffect(() => {
     if (!running) return;
 
@@ -27,18 +28,26 @@ export default function TimerRun() {
       setSecondsLeft((s) => {
         if (s > 0) return s - 1;
 
+        // ARBEIT → PAUSE
         if (phase === "work") {
           setPhase("pause");
           return pauseSec;
-        } else {
-          if (round < roundsTotal) {
-            setRound((r) => r + 1);
-            setPhase("work");
-            return workSec;
-          }
-          setRunning(false);
-          return 0;
         }
+
+        // PAUSE → NÄCHSTE RUNDE
+        if (round < roundsTotal) {
+          setRound((r) => r + 1);
+          setPhase("work");
+          return workSec;
+        }
+
+        // ALLES FERTIG → SUMMARY SCREEN
+        setRunning(false);
+        router.replace(
+          `/summary?work=${workSec}&pause=${pauseSec}&rounds=${roundsTotal}`
+        );
+
+        return 0;
       });
     }, 1000);
 
@@ -46,6 +55,7 @@ export default function TimerRun() {
   }, [running, phase, round, roundsTotal, workSec, pauseSec]);
 
   const togglePause = () => setRunning((v) => !v);
+
   const skip = () => {
     if (phase === "work") {
       setPhase("pause");
@@ -57,14 +67,18 @@ export default function TimerRun() {
         setSecondsLeft(workSec);
       } else {
         setRunning(false);
+        router.replace(
+          `/summary?work=${workSec}&pause=${pauseSec}&rounds=${roundsTotal}`
+        );
       }
     }
   };
-  const end = () => router.back();
+
+  const end = () => router.replace("/");
 
   const secondsDisplay = secondsLeft.toString();
 
-  // DOTS LOGIK
+  // DOTS für die Rundendarstellung
   const dots = Array.from({ length: roundsTotal }, (_, i) => i + 1);
 
   return (
@@ -104,7 +118,9 @@ export default function TimerRun() {
         {/* BUTTONS */}
         <View style={styles.bottom}>
           <Pressable style={styles.button} onPress={togglePause}>
-            <Text style={styles.buttonText}>{running ? "Pause" : "Weiter"}</Text>
+            <Text style={styles.buttonText}>
+              {running ? "Pause" : "Weiter"}
+            </Text>
           </Pressable>
 
           <Pressable style={styles.button} onPress={skip}>
@@ -115,6 +131,7 @@ export default function TimerRun() {
             <Text style={styles.buttonText}>End</Text>
           </Pressable>
         </View>
+
       </View>
     </ImageBackground>
   );
