@@ -8,11 +8,10 @@ import {
     View,
 } from "react-native";
 
-// fiktive Maximalgeschwindigkeit der „Tesla-Rakete“ in km/s
+// fiktive Geschwindigkeit der Rakete in km/s
 const V_MAX_KM_S = 7.5;
 
 export default function Summary() {
-  // Erwartete URL: /summary?work=60&pause=10&rounds=5
   const params = useLocalSearchParams<{
     work?: string;
     pause?: string;
@@ -28,23 +27,16 @@ export default function Summary() {
     [params.rounds]
   );
 
-  // Gesamt-Arbeitszeit in Sekunden
   const totalWorkSeconds = workSec * roundsTotal;
-
-  // Distanz = Zeit * v_max (km/s)
   const distanceKm = Math.round(totalWorkSeconds * V_MAX_KM_S);
 
-  const handleRestart = () => {
-    const work = params.work ?? "60";
-    const pause = params.pause ?? "10";
-    const rounds = params.rounds ?? "5";
-
-    router.replace(`/timer-run?work=${work}&pause=${pause}&rounds=${rounds}`);
+  const restart = () => {
+    router.replace(
+      `/timer-run?work=${params.work}&pause=${params.pause}&rounds=${params.rounds}`
+    );
   };
 
-  const handleHome = () => {
-    router.replace("/");
-  };
+  const goHome = () => router.replace("/");
 
   return (
     <ImageBackground
@@ -53,13 +45,13 @@ export default function Summary() {
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-        {/* Titel oben links */}
+        {/* TITEL */}
         <View style={styles.header}>
           <Text style={styles.super}>Super,</Text>
           <Text style={styles.name}>Max!</Text>
         </View>
 
-        {/* Textblock in der Mitte rechts */}
+        {/* TEXTBLOCK */}
         <View style={styles.textBlock}>
           <Text style={styles.text}>
             Du hast virtuelle{" "}
@@ -67,16 +59,16 @@ export default function Summary() {
             während deinem Intervall zurückgelegt!
           </Text>
 
-          <Text style={[styles.text, styles.textSpacing]}>Glückwunsch!</Text>
+          <Text style={[styles.text, styles.spacing]}>Glückwunsch!</Text>
         </View>
 
-        {/* Buttons unten mittig */}
+        {/* BUTTONS */}
         <View style={styles.buttonArea}>
-          <Pressable style={styles.button} onPress={handleRestart}>
+          <Pressable style={styles.button} onPress={restart}>
             <Text style={styles.buttonText}>Neu starten</Text>
           </Pressable>
 
-          <Pressable style={styles.button} onPress={handleHome}>
+          <Pressable style={styles.button} onPress={goHome}>
             <Text style={styles.buttonText}>Home</Text>
           </Pressable>
         </View>
@@ -87,6 +79,7 @@ export default function Summary() {
 
 const styles = StyleSheet.create({
   bg: { flex: 1 },
+
   overlay: {
     flex: 1,
     paddingHorizontal: 24,
@@ -94,57 +87,55 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  // Titel
   header: {
     marginTop: 16,
   },
   super: {
-    fontSize: 24,
+    fontSize: 26,
     color: "rgba(248,250,252,0.85)",
     fontWeight: "400",
   },
   name: {
-    fontSize: 26,
+    fontSize: 30,
     color: "rgba(248,250,252,1)",
     fontWeight: "700",
+    marginTop: -4,
   },
 
-  // Textblock mittig rechts angeordnet
   textBlock: {
     alignSelf: "flex-end",
     width: "65%",
-    marginRight: 8,
   },
   text: {
-    fontSize: 14,
-    lineHeight: 20,
     color: "rgba(226,232,240,0.9)",
+    fontSize: 15,
+    lineHeight: 20,
   },
   highlight: {
     fontWeight: "700",
-    color: "rgba(248,250,252,1)",
+    color: "white",
   },
-  textSpacing: {
+  spacing: {
     marginTop: 12,
   },
 
-  // Buttons unten
+  // BUTTONS → exakt wie timer-run.tsx
   buttonArea: {
     alignItems: "center",
-    gap: 10,
+    gap: 12,
   },
   button: {
     width: 220,
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderRadius: 999,
     backgroundColor: "rgba(255,255,255,0.25)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.6)",
+    borderColor: "rgba(255,255,255,0.5)",
   },
   buttonText: {
     textAlign: "center",
-    color: "rgba(15,23,42,0.95)",
+    color: "white",
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: 16,
   },
 });
