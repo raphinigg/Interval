@@ -4,49 +4,27 @@ FH Graubünden – Mobile App Development (MAD)<br>
 Projektautor: Raphael Nigg<br>
 Semester: HS25
 
-## Get started
+## Kurze Projektbeschreibung
+Die Idee hinter diesem Projekt war es, einen schlichten und benutzerfreundlichen Intervall-Timer zu entwickeln, der gleichzeitig einen dezenten Gamification-Aspekt integriert. Während jeder Arbeitsphase sammelt der Nutzer virtuelle Kilometer, die auf einer fiktiven Raketen-Geschwindigkeit basieren. Nach Abschluss des Intervalls erhält der User eine motivierende Rückmeldung, wie viele Kilometer er während seines Trainings „zurückgelegt“ hat.<br><br>
 
-1. Install dependencies
+Das App beinhaltet 3 Screens:
 
-   ```bash
-   npm install
-   ```
+### Startscreen
+Der User startet auf dem Homescreen, auf dem er seinen nächsten Intervall konfigurieren kann.
+Dort legt er fest, wie viele Sekunden er arbeiten möchte, wie lange die Pause zwischen den Arbeitsphasen dauern soll und wie viele Runden der Intervall umfassen soll. Im Hintergrund läuft eine einfache, animierte Flughafen-Szene als GIF.
+Für eine zukünftige Version wäre es sinnvoll, die Animation als Video statt als GIF einzubinden. Dadurch könnte die Schleife deutlich flüssiger dargestellt werden, ohne Einbussen bei der Bildqualität in Kauf nehmen zu müssen. Der Intervall startet mit dem auswählen von "Start"
 
-2. Start the app
 
-   ```bash
-   npx expo start
-   ```
+### Timer-Screen
+Nach dem Betätigen des Start-Buttons gelangt der User auf die zweite View. Im Hintergrund läuft eine animierte Rakete als GIF.
+Zentral oben wird die verbleibende Zeit angezeigt, wobei klar zwischen Arbeitsphase und Pause unterschieden wird. Darunter zeigen Rundenpunkte an, in welcher Runde sich der Nutzer aktuell befindet. Über drei Buttons Pause, Skip und End kann der Intervall jederzeit beeinflusst werden:
+Pause: Der Timer stoppt temporär
+Skip: Überspringt die aktuelle Phase
+End: Beendet den Intervall und führt zurück zum Homescreen
 
-In the output, you'll find options to open the app in a
+Hier könnte man die User Experience verbessern in dem man als Hintergrund kein .Gif verwendet, sondern ein Video. So könnte man dieses pausieren, wenn auf "Pause" geklickt wird.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Summary-Screen
+Nach Abschluss des Intervalls gelangt der User auf den Summary-Screen.
+Hier erhält er eine Rückmeldung, wie viele virtuelle Kilometer er während der gesamten Arbeitszeit „zurückgelegt“ hat.
+Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit, den Intervall neu zu starten oder zurück zum Homescreen zu wechseln.
