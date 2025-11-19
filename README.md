@@ -1,6 +1,8 @@
-# Welcome to your Expo app 👋
+# Intervall Timer – Semesterprojekt Mobile App Development
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+FH Graubünden – Mobile App Development (MAD)
+Projektautor: Raphael Nigg
+Semester: HS25
 
 ## Get started
 

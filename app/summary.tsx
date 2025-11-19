@@ -1,11 +1,11 @@
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useMemo } from "react";
 import {
-    ImageBackground,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 // fiktive Geschwindigkeit der Rakete in km/s
@@ -31,12 +31,15 @@ export default function Summary() {
   const distanceKm = Math.round(totalWorkSeconds * V_MAX_KM_S);
 
   const restart = () => {
-    router.replace(
-      `/timer-run?work=${params.work}&pause=${params.pause}&rounds=${params.rounds}`
-    );
+    const work = params.work ?? "60";
+    const pause = params.pause ?? "10";
+    const rounds = params.rounds ?? "5";
+    router.replace(`/timer-run?work=${work}&pause=${pause}&rounds=${rounds}`);
   };
 
-  const goHome = () => router.replace("/");
+  const goHome = () => {
+    router.replace("/");
+  };
 
   return (
     <ImageBackground
@@ -45,13 +48,12 @@ export default function Summary() {
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-        {/* TITEL */}
+        {/* Titel – weiter unten und zentriert */}
         <View style={styles.header}>
-          <Text style={styles.super}>Super,</Text>
-          <Text style={styles.name}>Max!</Text>
+          <Text style={styles.title}>Super gemacht!</Text>
         </View>
 
-        {/* TEXTBLOCK */}
+        {/* Textblock – mittig im Screen */}
         <View style={styles.textBlock}>
           <Text style={styles.text}>
             Du hast virtuelle{" "}
@@ -62,7 +64,7 @@ export default function Summary() {
           <Text style={[styles.text, styles.spacing]}>Glückwunsch!</Text>
         </View>
 
-        {/* BUTTONS */}
+        {/* Buttons – identisch zu timer-run.tsx */}
         <View style={styles.buttonArea}>
           <Pressable style={styles.button} onPress={restart}>
             <Text style={styles.buttonText}>Neu starten</Text>
@@ -79,7 +81,6 @@ export default function Summary() {
 
 const styles = StyleSheet.create({
   bg: { flex: 1 },
-
   overlay: {
     flex: 1,
     paddingHorizontal: 24,
@@ -87,29 +88,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
+  // Titel etwas weiter unten und in der Mitte
   header: {
-    marginTop: 16,
+    marginTop: 70,
+    alignItems: "center",
   },
-  super: {
-    fontSize: 26,
-    color: "rgba(248,250,252,0.85)",
-    fontWeight: "400",
-  },
-  name: {
+  title: {
     fontSize: 30,
-    color: "rgba(248,250,252,1)",
     fontWeight: "700",
-    marginTop: -4,
+    color: "rgba(248,250,252,0.95)",
   },
 
+  // Text mittig, leicht nach rechts versetzt möglich über maxWidth
   textBlock: {
-    alignSelf: "flex-end",
-    width: "65%",
+    alignSelf: "center",
+    maxWidth: "60%",
   },
   text: {
     color: "rgba(226,232,240,0.9)",
     fontSize: 15,
-    lineHeight: 20,
+    lineHeight: 21,
+    textAlign: "left",
   },
   highlight: {
     fontWeight: "700",
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
 
-  // BUTTONS → exakt wie timer-run.tsx
+  // Buttons – exakt wie timer-run.tsx
   buttonArea: {
     alignItems: "center",
     gap: 12,
