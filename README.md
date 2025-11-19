@@ -1,7 +1,7 @@
 # Intervall Timer – Semesterprojekt Mobile App Development
 
-FH Graubünden – Mobile App Development (MAD)
-Projektautor: Raphael Nigg
+FH Graubünden – Mobile App Development (MAD)<br>
+Projektautor: Raphael Nigg<br>
 Semester: HS25
 
 ## Get started
