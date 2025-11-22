@@ -41,7 +41,7 @@ Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit:
 * oder zurück zum Homescreen zu wechseln
 
 ### Projektstruktur
-md
+```md
 
 INTERVAL/
 ├─ app/
