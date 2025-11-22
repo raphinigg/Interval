@@ -28,7 +28,7 @@ Zentral oben wird die verbleibende Zeit angezeigt, wobei klar zwischen Arbeitsph
 Drei Buttons ermöglichen jederzeit eine Interaktion mit dem Intervall:
 
 * Pause: Der Timer stoppt temporär
-* 3Skip: Überspringt die aktuelle Phase
+* Skip: Überspringt die aktuelle Phase
 * End: Beendet den Intervall und führt zurück zum Homescreen
 
 Die User Experience könnte weiter verbessert werden, indem der Hintergrund zukünftig als Video statt als GIF implementiert wird. Dadurch könnte die Animation beim Drücken von „Pause“ ebenfalls pausieren.
@@ -42,25 +42,25 @@ Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit:
 
 ### Projektstruktur
 INTERVAL/
-│── app/
-│   ├── _layout.tsx          # Expo Router Layout
-│   ├── index.tsx            # Home / Workout Auswahl
-│   ├── summary.tsx          # Zusammenfassung nach dem Workout
-│   ├── timer-run.tsx        # Timer Screen während des Workouts
+├─ app/
+│ ├─ _layout.tsx
+│ ├─ index.tsx
+│ ├─ summary.tsx
+│ └─ timer-run.tsx
 │
-│── assets/
-│   ├── images/
-│   │   ├── background.gif
-│   │   ├── backgroundend.png
-│   │   ├── Spaceportsmall.gif
-│   │   ├── react-logo.png
-│   │   └── icons …
+├─ assets/
+│ └─ images/
+│ ├─ background.gif
+│ ├─ backgroundend.png
+│ ├─ Spaceportsmall.gif
+│ ├─ react-logo.png
+│ └─ icons …
 │
-│── app.json
-│── package.json
-│── tsconfig.json
-│── eslint.config.js
-│── README.md
+├─ app.json
+├─ package.json
+├─ tsconfig.json
+├─ eslint.config.js
+└─ README.md
 
 ### Installation
 git clone https://github.com/raphinigg/Interval
