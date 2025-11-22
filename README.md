@@ -40,9 +40,9 @@ Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit:
 * den Intervall neu zu starten 
 * oder zurück zum Homescreen zu wechseln
 
-
-```md
 ### Projektstruktur
+```md
+
 INTERVAL/
 ├─ app/
 │ ├─ _layout.tsx
@@ -63,6 +63,7 @@ INTERVAL/
 ├─ tsconfig.json
 ├─ eslint.config.js
 └─ README.md
+```md
 
 ### Installation
 git clone https://github.com/raphinigg/Interval
