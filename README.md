@@ -40,6 +40,8 @@ Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit:
 * den Intervall neu zu starten 
 * oder zurück zum Homescreen zu wechseln
 
+
+```md
 ### Projektstruktur
 INTERVAL/
 ├─ app/
