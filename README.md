@@ -5,26 +5,69 @@ Projektautor: Raphael Nigg<br>
 Semester: HS25
 
 ## Kurze Projektbeschreibung
-Die Idee hinter diesem Projekt war es, einen schlichten und benutzerfreundlichen Intervall-Timer zu entwickeln, der gleichzeitig einen dezenten Gamification-Aspekt integriert. Während jeder Arbeitsphase sammelt der Nutzer virtuelle Kilometer, die auf einer fiktiven Raketen-Geschwindigkeit basieren. Nach Abschluss des Intervalls erhält der User eine motivierende Rückmeldung, wie viele Kilometer er während seines Trainings „zurückgelegt“ hat.<br><br>
-
-Das App beinhaltet 3 Screens:
+Die Idee hinter diesem Projekt war es, einen schlichten und benutzerfreundlichen Intervall-Timer zu entwickeln, der gleichzeitig einen dezenten Gamification-Aspekt integriert. Während jeder Arbeitsphase sammelt der Nutzer virtuelle Kilometer, die auf einer fiktiven Raketen-Geschwindigkeit basieren. Nach Abschluss des Intervalls erhält der User eine motivierende Rückmeldung darüber, wie viele Kilometer er während seines Trainings „zurückgelegt“ hat.<br><br>
+Die App beinhaltet 3 Screens:
 
 ### Startscreen
 Der User startet auf dem Homescreen, auf dem er seinen nächsten Intervall konfigurieren kann.
-Dort legt er fest, wie viele Sekunden er arbeiten möchte, wie lange die Pause zwischen den Arbeitsphasen dauern soll und wie viele Runden der Intervall umfassen soll. Im Hintergrund läuft eine einfache, animierte Flughafen-Szene als GIF.
-Für eine zukünftige Version wäre es sinnvoll, die Animation als Video statt als GIF einzubinden. Dadurch könnte die Schleife deutlich flüssiger dargestellt werden, ohne Einbussen bei der Bildqualität in Kauf nehmen zu müssen. Der Intervall startet mit dem auswählen von "Start"
+Dort legt er fest:
+* wie viele Sekunden die Arbeitsphase dauert
+* wie lange die Pausen zwischen den Arbeitsphasen sind
+* wie viele Runden der Intervall umfassen soll
+Im Hintergrund läuft eine einfache, animierte Flughafenszene als GIF.
+Für zukünftige Versionen wäre es sinnvoll, die Animation als Video statt GIF einzubinden, um die Schleife flüssiger darzustellen und gleichzeitig die Bildqualität zu verbessern.
+Der Intervall startet durch Auswählen des Buttons „Start“.
 
 
 ### Timer-Screen
-Nach dem Betätigen des Start-Buttons gelangt der User auf die zweite View. Im Hintergrund läuft eine animierte Rakete als GIF.
-Zentral oben wird die verbleibende Zeit angezeigt, wobei klar zwischen Arbeitsphase und Pause unterschieden wird. Darunter zeigen Rundenpunkte an, in welcher Runde sich der Nutzer aktuell befindet. Über drei Buttons Pause, Skip und End kann der Intervall jederzeit beeinflusst werden:
-Pause: Der Timer stoppt temporär
-Skip: Überspringt die aktuelle Phase
-End: Beendet den Intervall und führt zurück zum Homescreen
+Nach Betätigen des Start-Buttons gelangt der User auf den Timer-Screen.
+Im Hintergrund läuft eine animierte Rakete als GIF.
 
-Hier könnte man die User Experience verbessern in dem man als Hintergrund kein .Gif verwendet, sondern ein Video. So könnte man dieses pausieren, wenn auf "Pause" geklickt wird.
+Zentral oben wird die verbleibende Zeit angezeigt, wobei klar zwischen Arbeitsphase und Pause unterschieden wird. Darunter zeigen Rundenpunkte an, in welcher Runde sich der Nutzer aktuell befindet.
+
+Drei Buttons ermöglichen jederzeit eine Interaktion mit dem Intervall:
+
+* Pause: Der Timer stoppt temporär
+* 3Skip: Überspringt die aktuelle Phase
+* End: Beendet den Intervall und führt zurück zum Homescreen
+
+Die User Experience könnte weiter verbessert werden, indem der Hintergrund zukünftig als Video statt als GIF implementiert wird. Dadurch könnte die Animation beim Drücken von „Pause“ ebenfalls pausieren.
 
 ### Summary-Screen
 Nach Abschluss des Intervalls gelangt der User auf den Summary-Screen.
 Hier erhält er eine Rückmeldung, wie viele virtuelle Kilometer er während der gesamten Arbeitszeit „zurückgelegt“ hat.
-Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit, den Intervall neu zu starten oder zurück zum Homescreen zu wechseln.
+Der Hintergrund ist erneut animiert, und zwei Buttons bieten die Möglichkeit:
+* den Intervall neu zu starten 
+* oder zurück zum Homescreen zu wechseln
+
+### Projektstruktur
+INTERVAL/
+│── app/
+│   ├── _layout.tsx          # Expo Router Layout
+│   ├── index.tsx            # Home / Workout Auswahl
+│   ├── summary.tsx          # Zusammenfassung nach dem Workout
+│   ├── timer-run.tsx        # Timer Screen während des Workouts
+│
+│── assets/
+│   ├── images/
+│   │   ├── background.gif
+│   │   ├── backgroundend.png
+│   │   ├── Spaceportsmall.gif
+│   │   ├── react-logo.png
+│   │   └── icons …
+│
+│── app.json
+│── package.json
+│── tsconfig.json
+│── eslint.config.js
+│── README.md
+
+### Installation
+git clone https://github.com/raphinigg/Interval
+npm install
+npx expo start
+
+### Kontakt
+Raphael Nigg / DBMTZ24
+Digital Business Management Student FHGR
+raphael_nigg@bluewin.ch
