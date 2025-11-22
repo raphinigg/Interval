@@ -4,7 +4,7 @@ FH Graubünden – Mobile App Development (MAD)<br>
 Projektautor: Raphael Nigg<br>
 Semester: HS25
 
-## Kurze Projektbeschreibung
+## Projektbeschreibung
 Die Idee hinter diesem Projekt war es, einen schlichten und benutzerfreundlichen Intervall-Timer zu entwickeln, der gleichzeitig einen dezenten Gamification-Aspekt integriert. Während jeder Arbeitsphase sammelt der Nutzer virtuelle Kilometer, die auf einer fiktiven Raketen-Geschwindigkeit basieren. Nach Abschluss des Intervalls erhält der User eine motivierende Rückmeldung darüber, wie viele Kilometer er während seines Trainings „zurückgelegt“ hat.<br><br>
 Die App beinhaltet 3 Screens:
 
@@ -32,6 +32,8 @@ Drei Buttons ermöglichen jederzeit eine Interaktion mit dem Intervall:
 * End: Beendet den Intervall und führt zurück zum Homescreen
 
 Die User Experience könnte weiter verbessert werden, indem der Hintergrund zukünftig als Video statt als GIF implementiert wird. Dadurch könnte die Animation beim Drücken von „Pause“ ebenfalls pausieren.
+
+Ausserdem wurde im Screendesign ein Höhenmesser eingebaut, welcher ständig zeigt wie hoch die Rakete zur Zeit x ist. Dies wurde weggelassen.
 
 ### Summary-Screen
 Nach Abschluss des Intervalls gelangt der User auf den Summary-Screen.

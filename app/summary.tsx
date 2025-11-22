@@ -9,8 +9,10 @@ import {
 } from "react-native";
 
 // fiktive Geschwindigkeit der Rakete in km/s
+// Fester Wert um es nicht zu verkomplizieren
 const V_MAX_KM_S = 7.5;
 
+//Werte aus dem Timer-Screen übernehmen
 export default function Summary() {
   const params = useLocalSearchParams<{
     work?: string;
@@ -18,6 +20,7 @@ export default function Summary() {
     rounds?: string;
   }>();
 
+  //Arbeitszeit pro Runde
   const workSec = useMemo(
     () => parseInt(params.work ?? "60", 10) || 0,
     [params.work]
@@ -27,6 +30,7 @@ export default function Summary() {
     [params.rounds]
   );
 
+  //Berechnung für die Kilometer die zurückgelegt wurden.
   const totalWorkSeconds = workSec * roundsTotal;
   const distanceKm = Math.round(totalWorkSeconds * V_MAX_KM_S);
 

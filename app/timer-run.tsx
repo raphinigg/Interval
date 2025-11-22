@@ -9,18 +9,20 @@ import {
 } from "react-native";
 
 export default function TimerRun() {
+  //Hier wird ausgelesen welche Werte in der Startseite eingegeben wurden.
   const params = useLocalSearchParams<{ work?: string; pause?: string; rounds?: string }>();
-
+  //Sicherstellen, dass die Zahlen richtig in Zahlen umgewandelt werden. (Kommen als Strings an.)
   const workSec = useMemo(() => parseInt(params.work ?? "60", 10) || 0, [params.work]);
   const pauseSec = useMemo(() => parseInt(params.pause ?? "10", 10) || 0, [params.pause]);
   const roundsTotal = useMemo(() => parseInt(params.rounds ?? "5", 10) || 1, [params.rounds]);
 
+    //"Phasen definieren"
   const [phase, setPhase] = useState<"work" | "pause">("work");
   const [round, setRound] = useState(1);
   const [secondsLeft, setSecondsLeft] = useState(workSec);
   const [running, setRunning] = useState(true);
 
-  // Countdown-Logik
+  
   useEffect(() => {
     if (!running) return;
 
@@ -74,11 +76,12 @@ export default function TimerRun() {
     }
   };
 
+    //Intervall abbrechen und zur Homeview
   const end = () => router.replace("/");
 
   const secondsDisplay = secondsLeft.toString();
 
-  // DOTS für die Rundendarstellung
+  // Die kleinen Punkte unterhalb der Zeit als Rundendarstellung
   const dots = Array.from({ length: roundsTotal }, (_, i) => i + 1);
 
   return (
@@ -137,6 +140,7 @@ export default function TimerRun() {
   );
 }
 
+//Styles
 const styles = StyleSheet.create({
   bg: { flex: 1 },
   overlay: {

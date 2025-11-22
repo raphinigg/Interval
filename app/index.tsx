@@ -14,6 +14,7 @@ export default function TimerSetup() {
   const [breakSeconds, setBreakSeconds] = useState("");
   const [rounds, setRounds] = useState("");
 
+  //Hintergrund mit .gif --> Darf nicht grösser als 100 MB sein!
   return (
     <ImageBackground
       source={require("../assets/images/Spaceportsmall.gif")}
@@ -22,11 +23,11 @@ export default function TimerSetup() {
     >
       <View style={styles.overlay}>
         <View style={styles.leftCol}>
-          {/* Headline ohne Name */}
+          {/* Titel */}
           <Text style={styles.headlineTop}>Dein nächster</Text>
           <Text style={styles.headlineBottom}>Intervall</Text>
 
-          {/* Sekunden Arbeit */}
+          {/* Text mit Arbeit */}
           <View style={styles.row}>
             <View style={styles.circle}>
               <TextInput
@@ -44,7 +45,7 @@ export default function TimerSetup() {
             </View>
           </View>
 
-          {/* Sekunden Pause */}
+          {/* Text mit Pause */}
           <View style={styles.row}>
             <View style={styles.circle}>
               <TextInput
@@ -62,7 +63,7 @@ export default function TimerSetup() {
             </View>
           </View>
 
-          {/* Anzahl Runden */}
+          {/* Text mit Runden */}
           <View style={styles.row}>
             <View style={styles.circle}>
               <TextInput
@@ -80,7 +81,7 @@ export default function TimerSetup() {
             </View>
           </View>
 
-          {/* Glass-UI Start-Button */}
+          {/* Button der zur nächsten View führt. (timer-run.tsx) */}
           <Pressable
             style={styles.startBtn}
             onPress={() => {
@@ -102,7 +103,7 @@ const CIRCLE_SIZE = 72;
 const styles = StyleSheet.create({
   bg: { flex: 1, width: "100%", height: "100%" },
 
- 
+  //Tranparenter Layer für Layout
   overlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.25)",
@@ -110,12 +111,15 @@ const styles = StyleSheet.create({
     paddingTop: 96,
     paddingBottom: 32,
   },
+  
+  //Spalte für alle Eingaben
   leftCol: {
     width: "70%",
     maxWidth: 360,
     gap: 24,
   },
 
+  //Überschrift
   headlineTop: {
     color: "rgba(255,255,255,0.9)",
     fontSize: 28,
@@ -134,6 +138,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 16,
   },
+
+  //Layout für die Eingabe innerhalb der Kreise
   circle: {
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
