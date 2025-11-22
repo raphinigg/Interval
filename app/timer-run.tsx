@@ -9,20 +9,26 @@ import {
 } from "react-native";
 
 export default function TimerRun() {
-  //Hier wird ausgelesen welche Werte in der Startseite eingegeben wurden.
   const params = useLocalSearchParams<{ work?: string; pause?: string; rounds?: string }>();
-  //Sicherstellen, dass die Zahlen richtig in Zahlen umgewandelt werden. (Kommen als Strings an.)
+
   const workSec = useMemo(() => parseInt(params.work ?? "60", 10) || 0, [params.work]);
   const pauseSec = useMemo(() => parseInt(params.pause ?? "10", 10) || 0, [params.pause]);
   const roundsTotal = useMemo(() => parseInt(params.rounds ?? "5", 10) || 1, [params.rounds]);
 
-    //"Phasen definieren"
   const [phase, setPhase] = useState<"work" | "pause">("work");
   const [round, setRound] = useState(1);
   const [secondsLeft, setSecondsLeft] = useState(workSec);
   const [running, setRunning] = useState(true);
+  const [finished, setFinished] = useState(false); // <-- NEU
 
   
+  useEffect(() => {
+    if (finished) {
+      router.replace(`/summary?work=${workSec}&pause=${pauseSec}&rounds=${roundsTotal}`);
+    }
+  }, [finished, workSec, pauseSec, roundsTotal]);
+
+  // Countdown-Logik
   useEffect(() => {
     if (!running) return;
 
@@ -36,19 +42,16 @@ export default function TimerRun() {
           return pauseSec;
         }
 
-        // PAUSE → NÄCHSTE RUNDE
+        // PAUSE → nächste Runde ODER Ende
         if (round < roundsTotal) {
           setRound((r) => r + 1);
           setPhase("work");
           return workSec;
         }
 
-        // ALLES FERTIG → SUMMARY SCREEN
+        // ALLES FERTIG
         setRunning(false);
-        router.replace(
-          `/summary?work=${workSec}&pause=${pauseSec}&rounds=${roundsTotal}`
-        );
-
+        setFinished(true); 
         return 0;
       });
     }, 1000);
@@ -69,19 +72,14 @@ export default function TimerRun() {
         setSecondsLeft(workSec);
       } else {
         setRunning(false);
-        router.replace(
-          `/summary?work=${workSec}&pause=${pauseSec}&rounds=${roundsTotal}`
-        );
+        setFinished(true); 
       }
     }
   };
 
-    //Intervall abbrechen und zur Homeview
   const end = () => router.replace("/");
 
   const secondsDisplay = secondsLeft.toString();
-
-  // Die kleinen Punkte unterhalb der Zeit als Rundendarstellung
   const dots = Array.from({ length: roundsTotal }, (_, i) => i + 1);
 
   return (
@@ -91,16 +89,13 @@ export default function TimerRun() {
       resizeMode="cover"
     >
       <View style={styles.overlay}>
-
         {/* OBERER BEREICH */}
         <View style={styles.top}>
           <View style={styles.timeRow}>
             <Text style={styles.timeValue}>{secondsDisplay}</Text>
             <View style={styles.timeLabelCol}>
               <Text style={styles.timeLabel}>Sekunden</Text>
-              <Text style={styles.timeLabel}>
-                {phase === "work" ? "Arbeit" : "Pause"}
-              </Text>
+              <Text style={styles.timeLabel}>{phase === "work" ? "Arbeit" : "Pause"}</Text>
             </View>
           </View>
 
@@ -108,12 +103,7 @@ export default function TimerRun() {
           <View style={styles.dotsRow}>
             {dots.map((n) => {
               const active = n === round;
-              return (
-                <View
-                  key={n}
-                  style={[styles.dot, active && styles.dotActive]}
-                />
-              );
+              return <View key={n} style={[styles.dot, active && styles.dotActive]} />;
             })}
           </View>
         </View>
@@ -121,9 +111,7 @@ export default function TimerRun() {
         {/* BUTTONS */}
         <View style={styles.bottom}>
           <Pressable style={styles.button} onPress={togglePause}>
-            <Text style={styles.buttonText}>
-              {running ? "Pause" : "Weiter"}
-            </Text>
+            <Text style={styles.buttonText}>{running ? "Pause" : "Weiter"}</Text>
           </Pressable>
 
           <Pressable style={styles.button} onPress={skip}>
@@ -134,13 +122,11 @@ export default function TimerRun() {
             <Text style={styles.buttonText}>End</Text>
           </Pressable>
         </View>
-
       </View>
     </ImageBackground>
   );
 }
 
-//Styles
 const styles = StyleSheet.create({
   bg: { flex: 1 },
   overlay: {
